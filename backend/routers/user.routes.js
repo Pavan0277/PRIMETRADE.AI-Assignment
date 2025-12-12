@@ -23,15 +23,10 @@ import { authLimiter } from "../middlewares/rateLimiter.js";
 const userRouter = Router();
 
 // Auth routes
-// userRouter
-//     .route("/register")
-//     .post(authLimiter, validate(registerSchema), registerUser);
-// userRouter.route("/login").post(authLimiter, validate(loginSchema), loginUser);
-
 userRouter
     .route("/register")
-    .post(validate(registerSchema), registerUser);
-userRouter.route("/login").post(validate(loginSchema), loginUser);
+    .post(authLimiter, validate(registerSchema), registerUser);
+userRouter.route("/login").post(authLimiter, validate(loginSchema), loginUser);
 userRouter.route("/refresh").post(refreshAccessToken);
 userRouter.route("/logout").post(verifyJWT, logoutUser);
 

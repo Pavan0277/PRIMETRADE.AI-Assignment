@@ -26,7 +26,7 @@ app.use(express.json({ limit: "16kb" }));
 app.use(cookieParser());
 
 // Rate limiting
-// app.use("/api/", apiLimiter);
+app.use("/api/", apiLimiter);
 
 // Request logging middleware
 app.use((req, res, next) => {

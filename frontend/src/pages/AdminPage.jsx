@@ -25,7 +25,14 @@ export const AdminPage = () => {
     }, [searchQuery]);
 
     const { data, isLoading, error } = useQuery({
-        queryKey: ["users", page, limit, roleFilter, statusFilter, debouncedSearch],
+        queryKey: [
+            "users",
+            page,
+            limit,
+            roleFilter,
+            statusFilter,
+            debouncedSearch,
+        ],
         queryFn: () =>
             userAPI.getAllUsers({
                 page,
@@ -73,7 +80,7 @@ export const AdminPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-white to-gray-50 relative">
+        <div className="min-h-screen bg-linear-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 relative transition-colors duration-300">
             {/* Background Pattern */}
             <div className="absolute inset-0 pattern-grid opacity-50"></div>
 
@@ -83,10 +90,10 @@ export const AdminPage = () => {
                 <div className="animate-fadeInUp">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-black">
+                            <h1 className="text-4xl md:text-5xl font-black dark:text-white">
                                 ADMIN PANEL
                             </h1>
-                            <p className="text-gray-600 font-medium mt-1">
+                            <p className="text-gray-600 dark:text-gray-400 font-medium mt-1">
                                 User Management Dashboard
                             </p>
                         </div>
@@ -98,11 +105,11 @@ export const AdminPage = () => {
                     </div>
 
                     {/* Search and Filter Section */}
-                    <div className="bg-white border-4 border-black p-6 mb-6 shadow-xl">
+                    <div className="bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-6 mb-6 shadow-xl">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {/* Search Input */}
                             <div className="md:col-span-1">
-                                <label className="block text-sm font-bold mb-2 tracking-wider">
+                                <label className="block text-sm font-bold mb-2 tracking-wider dark:text-white">
                                     SEARCH
                                 </label>
                                 <div className="relative">
@@ -113,7 +120,7 @@ export const AdminPage = () => {
                                         onChange={(e) =>
                                             setSearchQuery(e.target.value)
                                         }
-                                        className="w-full px-4 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium"
+                                        className="w-full px-4 py-2 border-2 border-black dark:border-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white font-medium bg-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                                     />
                                     {searchQuery !== debouncedSearch && (
                                         <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -125,7 +132,7 @@ export const AdminPage = () => {
 
                             {/* Role Filter */}
                             <div>
-                                <label className="block text-sm font-bold mb-2 tracking-wider">
+                                <label className="block text-sm font-bold mb-2 tracking-wider dark:text-white">
                                     FILTER BY ROLE
                                 </label>
                                 <select
@@ -134,7 +141,7 @@ export const AdminPage = () => {
                                         setRoleFilter(e.target.value);
                                         setPage(1);
                                     }}
-                                    className="w-full px-4 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium bg-white"
+                                    className="w-full px-4 py-2 border-2 border-black dark:border-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white font-medium bg-white dark:bg-gray-700 dark:text-white"
                                 >
                                     <option value="">All Roles</option>
                                     <option value="user">User</option>
@@ -144,7 +151,7 @@ export const AdminPage = () => {
 
                             {/* Status Filter */}
                             <div>
-                                <label className="block text-sm font-bold mb-2 tracking-wider">
+                                <label className="block text-sm font-bold mb-2 tracking-wider dark:text-white">
                                     FILTER BY STATUS
                                 </label>
                                 <select
@@ -153,7 +160,7 @@ export const AdminPage = () => {
                                         setStatusFilter(e.target.value);
                                         setPage(1);
                                     }}
-                                    className="w-full px-4 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium bg-white"
+                                    className="w-full px-4 py-2 border-2 border-black dark:border-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white font-medium bg-white dark:bg-gray-700 dark:text-white"
                                 >
                                     <option value="">All Status</option>
                                     <option value="true">Active</option>
@@ -166,7 +173,7 @@ export const AdminPage = () => {
                         {(searchQuery || roleFilter || statusFilter) && (
                             <button
                                 onClick={handleClearFilters}
-                                className="mt-4 px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-colors font-bold"
+                                className="mt-4 px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-bold dark:text-white"
                             >
                                 CLEAR FILTERS
                             </button>
@@ -178,13 +185,13 @@ export const AdminPage = () => {
                     <Loader />
                 ) : error ? (
                     <Card>
-                        <p className="text-center text-gray-600">
+                        <p className="text-center text-gray-600 dark:text-gray-400">
                             Error loading users: {error.message}
                         </p>
                     </Card>
                 ) : !data?.users || data.users.length === 0 ? (
                     <Card>
-                        <p className="text-center text-gray-600 py-8">
+                        <p className="text-center text-gray-600 dark:text-gray-400 py-8">
                             {searchQuery || roleFilter || statusFilter
                                 ? "No users match your filters."
                                 : "No users found."}
@@ -192,10 +199,10 @@ export const AdminPage = () => {
                     </Card>
                 ) : (
                     <>
-                        <div className="overflow-x-auto animate-fadeInUp hover-lift bg-white border-4 border-black shadow-xl">
+                        <div className="overflow-x-auto animate-fadeInUp hover-lift bg-white dark:bg-gray-800 border-4 border-black dark:border-white shadow-xl">
                             <table className="w-full">
                                 <thead>
-                                    <tr className="bg-black text-white">
+                                    <tr className="bg-black dark:bg-white text-white dark:text-black">
                                         <th className="px-4 py-4 text-left font-black tracking-wider">
                                             NAME
                                         </th>
@@ -217,16 +224,16 @@ export const AdminPage = () => {
                                     {data.users.map((user, idx) => (
                                         <tr
                                             key={user.id}
-                                            className={`border-t-2 border-black transition-colors hover:bg-gray-100 ${
+                                            className={`border-t-2 border-black dark:border-gray-600 transition-colors hover:bg-gray-100 dark:hover:bg-gray-600 ${
                                                 idx % 2 === 0
-                                                    ? "bg-white"
-                                                    : "bg-gray-50"
+                                                    ? "bg-white dark:bg-gray-800"
+                                                    : "bg-gray-50 dark:bg-gray-700"
                                             }`}
                                         >
-                                            <td className="px-4 py-4 font-bold">
+                                            <td className="px-4 py-4 font-bold dark:text-white">
                                                 {user.name}
                                             </td>
-                                            <td className="px-4 py-4 font-medium text-gray-700">
+                                            <td className="px-4 py-4 font-medium text-gray-700 dark:text-gray-300">
                                                 {user.email}
                                             </td>
                                             <td className="px-4 py-4">
@@ -238,7 +245,7 @@ export const AdminPage = () => {
                                                             e.target.value
                                                         )
                                                     }
-                                                    className="uppercase bg-black text-white px-3 py-1 text-sm font-bold border-2 border-black cursor-pointer hover:bg-gray-800"
+                                                    className="uppercase bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-sm font-bold border-2 border-black dark:border-white cursor-pointer hover:bg-gray-800 dark:hover:bg-gray-200"
                                                     disabled={
                                                         updateUserMutation.isPending
                                                     }
@@ -267,22 +274,30 @@ export const AdminPage = () => {
                                                             ? "bg-green-500 text-white border-green-600 hover:bg-green-700 hover:scale-105 hover:shadow-lg"
                                                             : "bg-red-500 text-white border-red-600 hover:bg-red-700 hover:scale-105 hover:shadow-lg"
                                                     } disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
-                                                    title={`Click to ${user.isActive ? 'deactivate' : 'activate'} user`}
+                                                    title={`Click to ${
+                                                        user.isActive
+                                                            ? "deactivate"
+                                                            : "activate"
+                                                    } user`}
                                                 >
                                                     <span className="flex items-center gap-2">
                                                         {user.isActive ? (
                                                             <>
-                                                                <span>ACTIVE</span>
+                                                                <span>
+                                                                    ACTIVE
+                                                                </span>
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <span>INACTIVE</span>
+                                                                <span>
+                                                                    INACTIVE
+                                                                </span>
                                                             </>
                                                         )}
                                                     </span>
                                                 </button>
                                             </td>
-                                            <td className="px-4 py-4 font-medium text-gray-600">
+                                            <td className="px-4 py-4 font-medium text-gray-600 dark:text-gray-400">
                                                 {new Date(
                                                     user.createdAt
                                                 ).toLocaleDateString("en-US", {
@@ -299,8 +314,8 @@ export const AdminPage = () => {
 
                         {/* Enhanced Pagination */}
                         {data?.pagination && data.pagination.pages > 1 && (
-                            <div className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white border-4 border-black p-6 shadow-xl">
-                                <div className="text-sm font-bold text-gray-600">
+                            <div className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-6 shadow-xl">
+                                <div className="text-sm font-bold text-gray-600 dark:text-gray-400">
                                     Showing {(page - 1) * limit + 1} to{" "}
                                     {Math.min(
                                         page * limit,
@@ -311,14 +326,14 @@ export const AdminPage = () => {
 
                                 <div className="flex gap-2 items-center flex-wrap justify-center">
                                     <button
-                                        className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+                                        className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold dark:text-white"
                                         disabled={page === 1}
                                         onClick={() => setPage(1)}
                                     >
                                         ⟨⟨ FIRST
                                     </button>
                                     <button
-                                        className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+                                        className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold dark:text-white"
                                         disabled={page === 1}
                                         onClick={() => setPage(page - 1)}
                                     >
@@ -341,10 +356,10 @@ export const AdminPage = () => {
                                                     return (
                                                         <button
                                                             key={pageNum}
-                                                            className={`px-4 py-2 border-2 border-black font-bold transition-colors ${
+                                                            className={`px-4 py-2 border-2 border-black dark:border-white font-bold transition-colors ${
                                                                 page === pageNum
-                                                                    ? "bg-black text-white"
-                                                                    : "hover:bg-gray-100"
+                                                                    ? "bg-black dark:bg-white text-white dark:text-black"
+                                                                    : "hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white"
                                                             }`}
                                                             onClick={() =>
                                                                 setPage(pageNum)
@@ -360,7 +375,7 @@ export const AdminPage = () => {
                                                     return (
                                                         <span
                                                             key={pageNum}
-                                                            className="px-2 font-bold"
+                                                            className="px-2 font-bold dark:text-white"
                                                         >
                                                             ...
                                                         </span>
@@ -372,14 +387,14 @@ export const AdminPage = () => {
                                     </div>
 
                                     <button
-                                        className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+                                        className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold dark:text-white"
                                         disabled={page >= data.pagination.pages}
                                         onClick={() => setPage(page + 1)}
                                     >
                                         NEXT ⟩
                                     </button>
                                     <button
-                                        className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+                                        className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold dark:text-white"
                                         disabled={page >= data.pagination.pages}
                                         onClick={() =>
                                             setPage(data.pagination.pages)
@@ -396,7 +411,7 @@ export const AdminPage = () => {
                             className="mt-8 animate-fadeInUp"
                             style={{ animationDelay: "0.2s" }}
                         >
-                            <h2 className="text-3xl font-black mb-6 flex items-center gap-2">
+                            <h2 className="text-3xl font-black mb-6 flex items-center gap-2 dark:text-white">
                                 📊 STATISTICS
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

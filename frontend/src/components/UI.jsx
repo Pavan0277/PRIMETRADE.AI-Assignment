@@ -10,15 +10,16 @@ export const Button = ({
     ...props
 }) => {
     const baseStyles =
-        "font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+        "font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:focus:ring-offset-gray-900";
 
     const variants = {
-        primary: "bg-black text-white hover:bg-gray-800 focus:ring-black",
+        primary:
+            "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 focus:ring-black dark:focus:ring-white",
         secondary:
-            "bg-white text-black border-2 border-black hover:bg-gray-100 focus:ring-black",
+            "bg-white dark:bg-gray-800 text-black dark:text-white border-2 border-black dark:border-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-black dark:focus:ring-white",
         outline:
-            "bg-transparent text-black border border-black hover:bg-black hover:text-white focus:ring-black",
-        danger: "bg-black text-white hover:bg-gray-800 border-2 border-gray-800 focus:ring-gray-800",
+            "bg-transparent text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black focus:ring-black dark:focus:ring-white",
+        danger: "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 border-2 border-gray-800 dark:border-gray-200 focus:ring-gray-800 dark:focus:ring-gray-200",
     };
 
     const sizes = {
@@ -72,19 +73,25 @@ export const Input = ({ label, error, type = "text", register, ...props }) => {
     return (
         <div className="w-full">
             {label && (
-                <label className="block text-sm font-medium text-black mb-1">
+                <label className="block text-sm font-medium text-black dark:text-white mb-1">
                     {label}
                 </label>
             )}
             <input
                 type={type}
                 className={`w-full px-4 py-2 border-2 ${
-                    error ? "border-black bg-gray-100" : "border-gray-300"
-                } focus:border-black focus:outline-none transition-colors`}
+                    error
+                        ? "border-black dark:border-white bg-gray-100 dark:bg-gray-700"
+                        : "border-gray-300 dark:border-gray-600"
+                } focus:border-black dark:focus:border-white focus:outline-none transition-colors bg-white dark:bg-gray-800 dark:text-white`}
                 {...register}
                 {...props}
             />
-            {error && <p className="mt-1 text-sm text-black">{error}</p>}
+            {error && (
+                <p className="mt-1 text-sm text-black dark:text-white">
+                    {error}
+                </p>
+            )}
         </div>
     );
 };
@@ -93,14 +100,16 @@ export const Select = ({ label, error, options, register, ...props }) => {
     return (
         <div className="w-full">
             {label && (
-                <label className="block text-sm font-medium text-black mb-1">
+                <label className="block text-sm font-medium text-black dark:text-white mb-1">
                     {label}
                 </label>
             )}
             <select
                 className={`w-full px-4 py-2 border-2 ${
-                    error ? "border-black bg-gray-100" : "border-gray-300"
-                } focus:border-black focus:outline-none transition-colors bg-white`}
+                    error
+                        ? "border-black dark:border-white bg-gray-100 dark:bg-gray-700"
+                        : "border-gray-300 dark:border-gray-600"
+                } focus:border-black dark:focus:border-white focus:outline-none transition-colors bg-white dark:bg-gray-800 dark:text-white`}
                 {...register}
                 {...props}
             >
@@ -110,7 +119,11 @@ export const Select = ({ label, error, options, register, ...props }) => {
                     </option>
                 ))}
             </select>
-            {error && <p className="mt-1 text-sm text-black">{error}</p>}
+            {error && (
+                <p className="mt-1 text-sm text-black dark:text-white">
+                    {error}
+                </p>
+            )}
         </div>
     );
 };
@@ -119,26 +132,34 @@ export const Textarea = ({ label, error, register, rows = 4, ...props }) => {
     return (
         <div className="w-full">
             {label && (
-                <label className="block text-sm font-medium text-black mb-1">
+                <label className="block text-sm font-medium text-black dark:text-white mb-1">
                     {label}
                 </label>
             )}
             <textarea
                 rows={rows}
                 className={`w-full px-4 py-2 border-2 ${
-                    error ? "border-black bg-gray-100" : "border-gray-300"
-                } focus:border-black focus:outline-none transition-colors resize-none`}
+                    error
+                        ? "border-black dark:border-white bg-gray-100 dark:bg-gray-700"
+                        : "border-gray-300 dark:border-gray-600"
+                } focus:border-black dark:focus:border-white focus:outline-none transition-colors resize-none bg-white dark:bg-gray-800 dark:text-white`}
                 {...register}
                 {...props}
             />
-            {error && <p className="mt-1 text-sm text-black">{error}</p>}
+            {error && (
+                <p className="mt-1 text-sm text-black dark:text-white">
+                    {error}
+                </p>
+            )}
         </div>
     );
 };
 
 export const Card = ({ children, className = "" }) => {
     return (
-        <div className={`bg-white border-2 border-black p-6 ${className}`}>
+        <div
+            className={`bg-white dark:bg-gray-800 border-2 border-black dark:border-white p-6 ${className}`}
+        >
             {children}
         </div>
     );
@@ -149,23 +170,26 @@ export const Modal = ({ isOpen, onClose, title, children }) => {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-70"
             onClick={onClose}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
         >
             <div
-                className="bg-white border-4 border-black p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto"
+                className="bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex justify-between items-center mb-4">
-                    <h2 id="modal-title" className="text-2xl font-bold">
+                    <h2
+                        id="modal-title"
+                        className="text-2xl font-bold dark:text-white"
+                    >
                         {title}
                     </h2>
                     <button
                         onClick={onClose}
-                        className="text-black hover:text-gray-600 text-2xl leading-none"
+                        className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-400 text-2xl leading-none"
                         aria-label="Close modal"
                     >
                         ×
@@ -221,7 +245,7 @@ export const ConfirmDialog = ({
 }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose} title={title}>
-            <p className="mb-6 text-gray-700">{message}</p>
+            <p className="mb-6 text-gray-700 dark:text-gray-300">{message}</p>
             <div className="flex gap-3 justify-end">
                 <Button variant="secondary" onClick={onClose}>
                     {cancelText}

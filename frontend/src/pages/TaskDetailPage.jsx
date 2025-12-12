@@ -88,7 +88,7 @@ export const TaskDetailPage = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-white">
+            <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
                 <Header />
                 <Loader />
             </div>
@@ -97,11 +97,11 @@ export const TaskDetailPage = () => {
 
     if (error || !task?.task) {
         return (
-            <div className="min-h-screen bg-white">
+            <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
                 <Header />
                 <main className="container mx-auto px-4 py-8">
                     <Card>
-                        <p className="text-center text-gray-600">
+                        <p className="text-center text-gray-600 dark:text-gray-400">
                             Error loading task:{" "}
                             {error?.message || "Task not found"}
                         </p>
@@ -117,9 +117,9 @@ export const TaskDetailPage = () => {
     }
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-white to-gray-50 relative">
+        <div className="min-h-screen bg-linear-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 relative transition-colors duration-300">
             {/* Background Pattern */}
-            <div className="absolute inset-0 pattern-dots"></div>
+            <div className="absolute inset-0 pattern-dots opacity-50"></div>
 
             <Header />
 
@@ -127,10 +127,10 @@ export const TaskDetailPage = () => {
                 <div className="max-w-2xl mx-auto animate-fadeInUp">
                     <div className="flex justify-between items-center mb-8">
                         <div>
-                            <h1 className="text-4xl font-black mb-2">
+                            <h1 className="text-4xl font-black mb-2 dark:text-white">
                                 EDIT TASK
                             </h1>
-                            <p className="text-gray-600 font-medium">
+                            <p className="text-gray-600 dark:text-gray-400 font-medium">
                                 Update task details below
                             </p>
                         </div>
@@ -143,7 +143,7 @@ export const TaskDetailPage = () => {
                         </Button>
                     </div>
 
-                    <div className="bg-white border-4 border-black p-8 shadow-2xl hover-lift">
+                    <div className="bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-8 shadow-2xl hover-lift">
                         <form
                             onSubmit={handleSubmit(onSubmit)}
                             className="space-y-6"
@@ -191,7 +191,7 @@ export const TaskDetailPage = () => {
                                 placeholder="urgent, frontend, bug"
                             />
 
-                            <div className="flex gap-4 pt-6 border-t-2 border-gray-200">
+                            <div className="flex gap-4 pt-6 border-t-2 border-gray-200 dark:border-gray-600">
                                 <Button
                                     type="button"
                                     variant="outline"
@@ -214,28 +214,28 @@ export const TaskDetailPage = () => {
                     </div>
 
                     <div
-                        className="mt-6 bg-white border-2 border-black p-6 animate-fadeInUp"
+                        className="mt-6 bg-white dark:bg-gray-800 border-2 border-black dark:border-white p-6 animate-fadeInUp"
                         style={{ animationDelay: "0.2s" }}
                     >
-                        <h3 className="text-sm font-bold text-gray-500 mb-3 tracking-wider">
+                        <h3 className="text-sm font-bold text-gray-500 dark:text-gray-400 mb-3 tracking-wider">
                             TASK METADATA
                         </h3>
                         <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                                <p className="text-gray-500 font-medium mb-1">
+                                <p className="text-gray-500 dark:text-gray-400 font-medium mb-1">
                                     Created
                                 </p>
-                                <p className="font-bold">
+                                <p className="font-bold dark:text-white">
                                     {new Date(
                                         task.task.createdAt
                                     ).toLocaleString()}
                                 </p>
                             </div>
                             <div>
-                                <p className="text-gray-500 font-medium mb-1">
+                                <p className="text-gray-500 dark:text-gray-400 font-medium mb-1">
                                     Last Updated
                                 </p>
-                                <p className="font-bold">
+                                <p className="font-bold dark:text-white">
                                     {new Date(
                                         task.task.updatedAt
                                     ).toLocaleString()}

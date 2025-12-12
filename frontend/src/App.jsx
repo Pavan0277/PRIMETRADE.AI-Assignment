@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 // Pages
@@ -28,63 +29,70 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
-                <AuthProvider>
-                    <Routes>
-                        <Route path="/" element={<LandingPage />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
+                <ThemeProvider>
+                    <AuthProvider>
+                        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+                            <Routes>
+                                <Route path="/" element={<LandingPage />} />
+                                <Route path="/login" element={<LoginPage />} />
+                                <Route
+                                    path="/register"
+                                    element={<RegisterPage />}
+                                />
 
-                        <Route
-                            path="/dashboard"
-                            element={
-                                <ProtectedRoute>
-                                    <DashboardPage />
-                                </ProtectedRoute>
-                            }
-                        />
+                                <Route
+                                    path="/dashboard"
+                                    element={
+                                        <ProtectedRoute>
+                                            <DashboardPage />
+                                        </ProtectedRoute>
+                                    }
+                                />
 
-                        <Route
-                            path="/profile"
-                            element={
-                                <ProtectedRoute>
-                                    <ProfilePage />
-                                </ProtectedRoute>
-                            }
-                        />
+                                <Route
+                                    path="/profile"
+                                    element={
+                                        <ProtectedRoute>
+                                            <ProfilePage />
+                                        </ProtectedRoute>
+                                    }
+                                />
 
-                        <Route
-                            path="/tasks/:id"
-                            element={
-                                <ProtectedRoute>
-                                    <TaskDetailPage />
-                                </ProtectedRoute>
-                            }
-                        />
+                                <Route
+                                    path="/tasks/:id"
+                                    element={
+                                        <ProtectedRoute>
+                                            <TaskDetailPage />
+                                        </ProtectedRoute>
+                                    }
+                                />
 
-                        <Route
-                            path="/admin"
-                            element={
-                                <ProtectedRoute requireAdmin={true}>
-                                    <AdminPage />
-                                </ProtectedRoute>
-                            }
-                        />
+                                <Route
+                                    path="/admin"
+                                    element={
+                                        <ProtectedRoute requireAdmin={true}>
+                                            <AdminPage />
+                                        </ProtectedRoute>
+                                    }
+                                />
 
-                        <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
+                                <Route path="*" element={<NotFoundPage />} />
+                            </Routes>
 
-                    <Toaster
-                        position="top-right"
-                        toastOptions={{
-                            duration: 4000,
-                            style: {
-                                background: "#fff",
-                                color: "#000",
-                                border: "2px solid #000",
-                            },
-                        }}
-                    />
-                </AuthProvider>
+                            <Toaster
+                                position="top-right"
+                                toastOptions={{
+                                    duration: 4000,
+                                    style: {
+                                        background: "#fff",
+                                        color: "#000",
+                                        border: "2px solid #000",
+                                    },
+                                }}
+                            />
+                        </div>
+                    </AuthProvider>
+                </ThemeProvider>
             </BrowserRouter>
         </QueryClientProvider>
     );

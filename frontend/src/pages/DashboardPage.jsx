@@ -111,7 +111,7 @@ export const DashboardPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-white to-gray-50 relative">
+        <div className="min-h-screen bg-linear-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 relative transition-colors duration-300">
             {/* Background Pattern */}
             <div className="absolute inset-0 pattern-dots opacity-50"></div>
 
@@ -121,10 +121,10 @@ export const DashboardPage = () => {
                 <div className="animate-fadeInUp">
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-black">
+                            <h1 className="text-4xl md:text-5xl font-black dark:text-white">
                                 TASKS
                             </h1>
-                            <p className="text-gray-600 font-medium mt-1">
+                            <p className="text-gray-600 dark:text-gray-400 font-medium mt-1">
                                 Manage your tasks efficiently
                             </p>
                         </div>
@@ -137,7 +137,7 @@ export const DashboardPage = () => {
                     </div>
 
                     {/* Filters */}
-                    <div className="bg-white border-4 border-black p-6 mb-6 shadow-xl">
+                    <div className="bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-6 mb-6 shadow-xl">
                         <form
                             onSubmit={handleSearch}
                             className="grid grid-cols-1 md:grid-cols-3 gap-4"
@@ -152,7 +152,7 @@ export const DashboardPage = () => {
                                         q: e.target.value,
                                     })
                                 }
-                                className="px-4 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium"
+                                className="px-4 py-2 border-2 border-black dark:border-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white font-medium bg-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                             />
                             <select
                                 value={filters.status}
@@ -163,7 +163,7 @@ export const DashboardPage = () => {
                                         page: 1,
                                     })
                                 }
-                                className="px-4 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium bg-white"
+                                className="px-4 py-2 border-2 border-black dark:border-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white font-medium bg-white dark:bg-gray-700 dark:text-white"
                             >
                                 <option value="">All Status</option>
                                 <option value="open">Open</option>
@@ -179,7 +179,7 @@ export const DashboardPage = () => {
                                         page: 1,
                                     })
                                 }
-                                className="px-4 py-2 border-2 border-black focus:outline-none focus:ring-2 focus:ring-black font-medium bg-white"
+                                className="px-4 py-2 border-2 border-black dark:border-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white font-medium bg-white dark:bg-gray-700 dark:text-white"
                             >
                                 <option value="-createdAt">Newest First</option>
                                 <option value="createdAt">Oldest First</option>
@@ -195,13 +195,13 @@ export const DashboardPage = () => {
                     <Loader />
                 ) : error ? (
                     <Card>
-                        <p className="text-center text-gray-600">
+                        <p className="text-center text-gray-600 dark:text-gray-400">
                             Error loading tasks: {error.message}
                         </p>
                     </Card>
                 ) : !data?.items || data.items.length === 0 ? (
-                    <div className="bg-white border-4 border-black p-12 shadow-xl text-center">
-                        <p className="text-xl text-gray-600 font-bold">
+                    <div className="bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-12 shadow-xl text-center">
+                        <p className="text-xl text-gray-600 dark:text-gray-400 font-bold">
                             No tasks found. Create your first task!
                         </p>
                     </div>
@@ -211,25 +211,25 @@ export const DashboardPage = () => {
                             {data.items.map((task) => (
                                 <div
                                     key={task._id}
-                                    className="bg-white border-4 border-black p-6 shadow-xl hover-lift transition-all"
+                                    className="bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-6 shadow-xl hover-lift transition-all"
                                 >
                                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
                                         <div className="flex-1">
-                                            <h3 className="text-2xl font-black mb-2">
+                                            <h3 className="text-2xl font-black mb-2 dark:text-white">
                                                 {task.title}
                                             </h3>
-                                            <p className="text-gray-600 mb-3 font-medium">
+                                            <p className="text-gray-600 dark:text-gray-400 mb-3 font-medium">
                                                 {task.description}
                                             </p>
                                             <div className="flex flex-wrap gap-2 items-center">
                                                 <span
-                                                    className={`px-3 py-1 text-sm font-bold border-2 border-black ${
+                                                    className={`px-3 py-1 text-sm font-bold border-2 border-black dark:border-white ${
                                                         task.status === "done"
-                                                            ? "bg-black text-white"
+                                                            ? "bg-black dark:bg-white text-white dark:text-black"
                                                             : task.status ===
                                                               "in-progress"
-                                                            ? "bg-gray-800 text-white"
-                                                            : "bg-white text-black"
+                                                            ? "bg-gray-800 dark:bg-gray-300 text-white dark:text-black"
+                                                            : "bg-white dark:bg-gray-700 text-black dark:text-white"
                                                     }`}
                                                 >
                                                     {task.status
@@ -241,14 +241,14 @@ export const DashboardPage = () => {
                                                         (tag, idx) => (
                                                             <span
                                                                 key={idx}
-                                                                className="px-2 py-1 text-xs border-2 border-black font-bold"
+                                                                className="px-2 py-1 text-xs border-2 border-black dark:border-white font-bold dark:text-white"
                                                             >
                                                                 {tag}
                                                             </span>
                                                         )
                                                     )}
                                                 {task.dueDate && (
-                                                    <span className="text-sm text-gray-600 font-medium">
+                                                    <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                                                         Due:{" "}
                                                         {new Date(
                                                             task.dueDate
@@ -264,7 +264,7 @@ export const DashboardPage = () => {
                                                         `/tasks/${task._id}`
                                                     )
                                                 }
-                                                className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-all font-bold"
+                                                className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all font-bold dark:text-white"
                                                 aria-label="Edit task"
                                             >
                                                 EDIT
@@ -286,7 +286,7 @@ export const DashboardPage = () => {
 
                         {/* Pagination */}
                         {data.pagination && data.pagination.pages > 1 && (
-                            <div className="mt-8 flex justify-center gap-2 bg-white border-4 border-black p-6 shadow-xl">
+                            <div className="mt-8 flex justify-center gap-2 bg-white dark:bg-gray-800 border-4 border-black dark:border-white p-6 shadow-xl">
                                 <button
                                     disabled={filters.page === 1}
                                     onClick={() =>
@@ -295,11 +295,11 @@ export const DashboardPage = () => {
                                             page: filters.page - 1,
                                         })
                                     }
-                                    className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed dark:text-white"
                                 >
                                     ⟨ PREVIOUS
                                 </button>
-                                <span className="px-4 py-2 border-2 border-black font-bold bg-black text-white">
+                                <span className="px-4 py-2 border-2 border-black dark:border-white font-bold bg-black dark:bg-white text-white dark:text-black">
                                     PAGE {filters.page} OF{" "}
                                     {data.pagination.pages}
                                 </span>
@@ -313,7 +313,7 @@ export const DashboardPage = () => {
                                             page: filters.page + 1,
                                         })
                                     }
-                                    className="px-4 py-2 border-2 border-black hover:bg-black hover:text-white transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed dark:text-white"
                                 >
                                     NEXT ⟩
                                 </button>
